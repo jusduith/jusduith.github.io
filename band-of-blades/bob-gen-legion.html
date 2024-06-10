@@ -1,0 +1,308 @@
+<html>
+    <head>
+        <title>BAND OF BLADES - Generador de Legión</title>
+        <!--FOUNDATION-->
+        <link rel="stylesheet" href="../content/css/foundation.css">
+
+        <!--JQUERY-->
+        <script src="../scripts/vendor/jquery-3.7.1.min.js"></script>
+        
+        <!--Foundation-->        
+        <script src="../scripts/vendor/foundation.js"></script>
+    
+        <script type="text/javascript">
+            $(function(){
+                $('#generar').on('click', (e) => generar(e));    
+            });
+
+            function generar(e){
+                limpiarPelotones();
+                generarPeloton(1);
+                generarPeloton(2);
+                generarPeloton(3);
+                generarPeloton(4);
+                generarPeloton(5);
+                generarPeloton(6);
+            }
+
+            function limpiarPelotones(){
+                for (var peloton = 1; peloton <= 6; peloton++)
+                    $(`#peloton-${peloton} tbody`).html('');
+            }
+
+            function generarPeloton(peloton){
+                let $peloton = $(`#peloton-${peloton} tbody`);
+                for (var novato = 1; novato <= 5; novato++){
+                    let legado = getDado(4);
+                    let rasgo1 = getDado(4);
+                    let rasgo2 = getDado(4, rasgo1);
+                    let sexo = getDado(2);
+                    
+                    let $tr = $('<tr></tr>');
+                    let $nombre = $('<td></td>').text(`${getNombre(legado, sexo)}`);
+                    let $sexo = $('<td></td>').text(`${getSexo(sexo)}`);
+                    let $legado = $('<td></td>').text(`${getLegado(legado)}`);
+                    let $rasgo1 = $('<td></td>').text(`${getRasgo(legado, rasgo1)}`);
+                    let $rasgo2 = $('<td></td>').text(`${getRasgo(legado, rasgo2)}`);
+                    $tr.append($nombre);
+                    $tr.append($sexo);
+                    $tr.append($legado);
+                    $tr.append($rasgo1);
+                    $tr.append($rasgo2);
+                    $peloton.append($tr);
+                }  
+            }
+
+            function getNombre(legado, sexo){
+                switch (legado){
+                    case 1:
+                        return getNombreBartan(sexo);           
+                    case 2:
+                        return getNombreOrite(sexo);
+                    case 3:
+                        return getNombrePanyar(sexo);           
+                    case 4:
+                        return getNombreZemyati(sexo);
+                }
+                return '';
+            }
+
+            function getNombreBartan(sexo){
+                let nombresF = ['Adisha','Adiva','Alira','Aswina','Kalyika','Kaviya','Kita','Karina','Kavita','Lalika','Leora','Meera','Nalini','Nysha','Palina','Priya','Rahika','Rania','Rashi','Riya','Sarika','Seneha','Shaila','Shimya','Tashya','Vani','Vanya','Yashika','Zara'];
+                let nombresM = ['Adikar','Adrik','Arun','Arvin','Darosh','Garik','Harin','Jarek','Kalish','Karoj','Kiran','Kirish','Lorith','Makit','Malek','Nadir','Nadit','Parkresh','Parthos','Raghav','Rakash','Rakesh','Rajan','Tanrik','Vashan','Vikram','Tarek ','Zarik','Zoran'];
+                let apellidos = ['Arani','Adani','Bharati','Chabarti','Charvi','Danava','Dardhi','Devaki','Dewa','Ghatri','Janati','Kapura','Kashani','Kepatia','Khatri','Lavani','Manabur','Mandari','Navari','Padavi','Pakshi','Rakhari','Savani','Tharani','Varani','Vishari','Yavani','Zandari'];
+                let nombre = ((sexo == 1) ? getDado(nombresF.length) : getDado(nombresM.length)) - 1;
+                let apellido = getDado(apellidos.length) - 1;
+                if (sexo == 1) 
+                    return `${nombresF[nombre]} ${apellidos[apellido]}`;
+                else
+                    return `${nombresM[nombre]} ${apellidos[apellido]}`;
+            }
+
+            function getNombreOrite(sexo){
+                let nombresF = ['Adele', 'Aurora', 'Beatrice', 'Bianca', 'Chiara', 'Claudia', 'Daphne', 'Eleanora', 'Elise', 'Emetta', 'Francesca', 'Gabriella', 'Giselle', 'Hadriana', 'Isabella', 'Juliana', 'Katovica', 'Livia', 'Luciana', 'Mariana', 'Millia', 'Natalia', 'Octavia', 'Paulina', 'Regina', 'Severina', 'Sophia', 'Tiana', 'Valeria', 'Vittoria'];
+                let nombresM = ['Alben', 'Anton', 'Armand', 'Bastien', 'Blas', 'Casimir', 'Clement', 'Cyprian', 'Darian', 'Edmund', 'Elrik', 'Emilien', 'Fabian', 'Farian', 'Gerard', 'Henrik', 'Ignatius', 'Jorian', 'Kaspar', 'Leon', 'Marilo', 'Nikolai', 'Oswin', 'Pavel', 'Quentin', 'Rubin', 'Silvin', 'Tomas', 'Valentin', 'Willem'];
+                let apellidos = ['Albrekt', 'Bernardi', 'Capelli', 'Damaris', 'Fabrini', 'Garossi', 'Loprio', 'Martiko', 'Neroni', 'Orsini', 'Pavoni', 'Quaranta', 'Rodano', 'Sanicci', 'Tassini', 'Urbani', 'Vallone', 'Zardani', 'Bellini', 'Conti', 'De Luca', 'Esposito', 'Ferrara', 'Gallo', 'Marino', 'Rossi', 'Santoro', 'Venturi', 'Zanetti', 'Ricci'];
+                let nombre = ((sexo == 1) ? getDado(nombresF.length) : getDado(nombresM.length)) - 1;
+                let apellido = getDado(apellidos.length) - 1;
+                if (sexo == 1) 
+                    return `${nombresF[nombre]} ${apellidos[apellido]}`;
+                else
+                    return `${nombresM[nombre]} ${apellidos[apellido]}`;
+            }
+
+            function getNombrePanyar(sexo){
+                let nombresG = ['Arboleda', 'Arrecife', 'Ascua', 'Bosque', 'Brisa', 'Ceniza', 'Claro', 'Estrella', 'Flama', 'Fogata', 'Llamarada', 'Luz', 'Marea', 'Niebla', 'Nube', 'Ola', 'Riada', 'Rocío', 'Sombra', 'Sol', 'Tempestad', 'Tormenta', 'Trueno', 'Viento', 'Lago', 'Cumbre', 'Rayo', 'Fulgor', 'Amanecer', 'Río'];
+                let nombresC = ['Ámbar', 'Azur', 'Bermellón', 'Carmesí', 'Celeste', 'Cian', 'Cobre', 'Dorado', 'Escarlata', 'Esmeralda', 'Grana', 'Jade', 'Lila', 'Malva', 'Marrón', 'Nácar', 'Ocre', 'Oliva', 'Perla', 'Plata', 'Púrpura', 'Rubí', 'Siena', 'Turquesa', 'Vainilla', 'Verde', 'Violeta', 'Zafiro', 'Índigo', 'Lavanda'];
+                let nombresM = ['Amanecida|Amanecido', 'Audaz|Audaz', 'Brillante|Brillante', 'Cazadora|Cazador', 'Celestial|Celestial', 'Creciente|Creciente', 'Danzante|Danzante', 'Destacada|Destacado', 'Dinámica|Dinámico', 'Embestidora|Embestidor', 'Emergente|Emergente', 'Erguida|Erguido', 'Eterna|Eterno', 'Firme|Firme', 'Fluida|Fluido', 'Furiosa|Furioso', 'Gallarda|Gallardo', 'Guardiana|Guardián', 'Indomable|Indomable', 'Intrépida|Intrépido', 'Luminosa|Luminoso', 'Majestuosa|Majestuoso', 'Noble|Noble', 'Radiante|Radiante', 'Sagaz|Sagaz', 'Serena|Sereno', 'Tenaz|Tenaz', 'Valerosa|Valeroso', 'Vigilante|Vigilante', 'Vivaz|Vivaz'];
+                let nombreG = getDado(nombresG.length) - 1;
+                let nombreC = getDado(nombresC.length) - 1;
+                let nombreM = getDado(nombresM.length) - 1;
+                if (sexo == 1) 
+                    return `${nombresG[nombreG]} ${nombresC[nombreC]} ${nombresM[nombreM].split('|')[0]}`;
+                else
+                    return `${nombresG[nombreG]} ${nombresC[nombreC]} ${nombresM[nombreM].split('|')[1]}`;
+            }
+
+            function getNombreZemyati(sexo){
+                let nombresF = ['Alika', 'Anastasia', 'Dania', 'Darya', 'Elena', 'Emilinya', 'Freriya', 'Galina', 'Irina', 'Isalana', 'Katarina', 'Klarina', 'Larisa', 'Lidiya', 'Marina', 'Mila', 'Nadezhda', 'Natalya', 'Nina', 'Olga', 'Polina', 'Raisa', 'Sasha', 'Sverena', 'Tatinika', 'Tatiana', 'Valentina', 'Veronika', 'Viktoria', 'Zaya'];
+                let nombresM = ['Adrimir', 'Aleksander', 'Bogdan', 'Colay', 'Dmitri', 'Egor', 'Fedor', 'Gabridyor', 'Grigori', 'Igor', 'Ivan', 'Konstantin', 'Leonid', 'Liavel', 'Maksim', 'Maleksei', 'Melislav', 'Mikhail', 'Nikolai', 'Oleg', 'Pavel', 'Pyotr', 'Rodion', 'Sergei', 'Stepan', 'Theonin', 'Viktor', 'Viltory', 'Vladimir', 'Yakov'];
+                let apellidosF1 = ['Alik', 'Anastasi', 'Dani', 'Dary', 'Elen', 'Emiliny', 'Freriy', 'Galin', 'Irin', 'Isalan', 'Katarin', 'Klarin', 'Laris', 'Lidiy', 'Marin', 'Mil', 'Nadezhd', 'Nataly', 'Nin', 'Olg', 'Polin', 'Rais', 'Sash', 'Sveren', 'Tatinik', 'Tatian', 'Valentin', 'Veronik', 'Viktori', 'Zay'];
+                let apellidosM1 = ['Adrimir', 'Aleksander', 'Bogdan', 'Colay', 'Dmitr', 'Egor', 'Fedor', 'Gabridyor', 'Grigor', 'Igor', 'Ivan', 'Konstantin', 'Leonid', 'Liavel', 'Maksim', 'Malekse', 'Melislav', 'Mikhail', 'Nikola', 'Oleg', 'Pavel', 'Pyotr', 'Rodion', 'Serge', 'Stepan', 'Theonin', 'Viktor', 'Viltor', 'Vladimir', 'Yakov'];
+                let apellidosF2 = ['yevna', 'ovna', 'ichna'];
+                let apellidosM2 = ['ovich', 'evich', 'ich'];
+                let nombre = ((sexo == 1) ? getDado(nombresF.length) : getDado(nombresM.length)) - 1;
+                let apellido1 = ((sexo == 1) ? getDado(apellidosF1.length) : getDado(apellidosM1.length)) - 1;
+                let apellido2 = ((sexo == 1) ? getDado(apellidosF2.length) : getDado(apellidosM2.length)) - 1;
+                if (sexo == 1) 
+                    return `${nombresF[nombre]} ${apellidosF1[apellido1]}${apellidosF2[apellido2]}`;
+                else
+                    return `${nombresM[nombre]} ${apellidosM1[apellido1]}${apellidosM2[apellido2]}`;
+            }
+
+            function getSexo(dado){
+                switch (dado){
+                    case 1: return "Mujer";
+                    case 2: return "Varón";
+                }
+            }
+
+            function getLegado(dado){
+                switch (dado){
+                    case 1: return "Bartan";
+                    case 2: return "Orite";
+                    case 3: return "Panyar";
+                    case 4: return "Zemyati";
+                }
+            }
+
+            function getRasgo(legado, dado){
+                switch (legado){
+                    case 1: return getRasgoBartan(dado);
+                    case 2: return getRasgoOrite(dado);
+                    case 3: return getRasgoPanyar(dado);
+                    case 4: return getRasgoZemyati(dado);
+                }
+                return '';
+            }
+
+            function getRasgoBartan(dado){
+                switch (dado){
+                    case 1: return "Cálido";
+                    case 2: return "Pío";
+                    case 3: return "Estoico";
+                    case 4: return "Educado";
+                }
+                return '';
+            }
+
+            function getRasgoOrite(dado){
+                switch (dado){
+                    case 1: return "Noble";
+                    case 2: return "Contactos";
+                    case 3: return "Vengativo";
+                    case 4: return "Severo";
+                }
+                return '';
+            }
+
+            function getRasgoPanyar(dado){
+                switch (dado){
+                    case 1: return "Artesano";
+                    case 2: return "Viajero";
+                    case 3: return "Astuto";
+                    case 4: return "Marcado";
+                }
+                return '';
+            }
+            
+            function getRasgoZemyati(dado){
+                switch (dado){
+                    case 1: return "Resistente";
+                    case 2: return "Audaz";
+                    case 3: return "Leal";
+                    case 4: return "Terco";
+                }
+                return '';
+            }
+
+            function getDado(max, minus = 0){
+                if (minus == 0) return Math.floor(Math.random() * max) + 1;
+                let dado = minus;
+                while (dado == minus) dado = getDado(max);
+                return dado;
+            }
+        </script>
+    </head>
+    <body>
+
+        <div class="row">
+            <div class="columns large-12 text-center">
+                <input id="generar" type="button" class="button" value="Generar" />        
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="columns large-12 text-center">
+                <h2>Lobos de Ceniza</h2>
+                <table id="peloton-1">
+                    <thead>
+                        <th>Nombre</th>
+                        <th>Sexo</th>
+                        <th>Legado</th>
+                        <th>Rasgo 1</th>
+                        <th>Rasgo 2</th>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="columns large-12 text-center">
+                <h2>Cuervos Sonrientes</h2>
+                <table id="peloton-2">
+                    <thead>
+                        <th>Nombre</th>
+                        <th>Sexo</th>
+                        <th>Legado</th>
+                        <th>Rasgo 1</th>
+                        <th>Rasgo 2</th>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="columns large-12 text-center">
+                <h2>Víboras Estrella</h2>
+                <table id="peloton-3">
+                    <thead>
+                        <th>Nombre</th>
+                        <th>Sexo</th>
+                        <th>Legado</th>
+                        <th>Rasgo 1</th>
+                        <th>Rasgo 2</th>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="columns large-12 text-center">
+                <h2>Leones Heridos</h2>
+                <table id="peloton-4">
+                    <thead>
+                        <th>Nombre</th>
+                        <th>Sexo</th>
+                        <th>Legado</th>
+                        <th>Rasgo 1</th>
+                        <th>Rasgo 2</th>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="columns large-12 text-center">
+                <h2>Lechuzas Fantasma</h2>
+                <table id="peloton-5">
+                    <thead>
+                        <th>Nombre</th>
+                        <th>Sexo</th>
+                        <th>Legado</th>
+                        <th>Rasgo 1</th>
+                        <th>Rasgo 2</th>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="columns large-12 text-center">
+                <h2>Ciervos Planteados</h2>
+                <table id="peloton-6">
+                    <thead>
+                        <th>Nombre</th>
+                        <th>Sexo</th>
+                        <th>Legado</th>
+                        <th>Rasgo 1</th>
+                        <th>Rasgo 2</th>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>       
+    </body>
+</html>
